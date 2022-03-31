@@ -1,0 +1,4 @@
+target/
+.idea/
+sample.db
+exchangeRates.properties
