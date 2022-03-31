@@ -8,12 +8,14 @@ import at.campus02.storage.Database;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Scanner;
 
 public class ItemInput {
     private final InputHelper inputHelper;
 
     public ItemInput() {
-        this.inputHelper = new InputHelper();
+        Scanner scanner = new Scanner(System.in);
+        this.inputHelper = new InputHelper(scanner, System.out);
     }
 
     public void viewItem() throws EOFException {

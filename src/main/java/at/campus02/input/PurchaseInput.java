@@ -4,12 +4,14 @@ import at.campus02.models.Purchase;
 import at.campus02.storage.Database;
 
 import java.io.EOFException;
+import java.util.Scanner;
 
 public class PurchaseInput {
     private final InputHelper inputHelper;
 
     public PurchaseInput() {
-        this.inputHelper = new InputHelper();
+        Scanner scanner = new Scanner(System.in);
+        this.inputHelper = new InputHelper(scanner,System.out);
     }
 
     public void viewPurchase() throws EOFException {

@@ -3,6 +3,7 @@ package at.campus02.input;
 import at.campus02.storage.Database;
 
 import java.io.EOFException;
+import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,13 +17,15 @@ public class InputHelper {
     public static final int ID_MUST_NOT_EXIST = 2;
 
     private final Scanner scanner;
+    private final PrintStream out;
 
-    public InputHelper() {
-        this.scanner = new Scanner(System.in);
+    public InputHelper(Scanner scanner, PrintStream out) {
+        this.scanner = scanner;
+        this.out = out;
     }
 
     public Integer getNumber(String prompt) throws EOFException {
-        System.out.println(prompt + " (0 to abort) ");
+        out.println(prompt + " (0 to abort) ");
         int input = scanner.nextInt();
         scanner.nextLine();
         if (input == 0) {
@@ -33,7 +36,7 @@ public class InputHelper {
 
     private Integer getId(String prompt, int mode, Function<Integer, Boolean> containsKey) throws EOFException {
         while (true) {
-            System.out.println(prompt + " (0 to abort) ");
+            out.println(prompt + " (0 to abort) ");
             Integer id = scanner.nextInt();
             scanner.nextLine();
             if (id == 0) {
@@ -62,7 +65,7 @@ public class InputHelper {
     }
 
     public String getString(String prompt) throws EOFException {
-        System.out.println(prompt + " (empty string to abort) ");
+        out.println(prompt + " (empty string to abort) ");
         String input = scanner.nextLine();
         if (input.isEmpty()) {
             throw new EOFException();
@@ -72,7 +75,7 @@ public class InputHelper {
 
     public BigDecimal getDecimal(String prompt) throws EOFException {
         while (true) {
-            System.out.println(prompt + " (0 to abort) ");
+            out.println(prompt + " (0 to abort) ");
             try {
                 BigDecimal input = scanner.nextBigDecimal();
                 scanner.nextLine();
@@ -81,7 +84,7 @@ public class InputHelper {
                 }
                 return input;
             } catch(InputMismatchException e) {
-                System.out.println("Wrong decimal format");
+                out.println("Wrong decimal format");
             }
         }
     }
@@ -89,7 +92,7 @@ public class InputHelper {
     public Date getDate(String prompt) throws EOFException {
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
         while (true) {
-            System.out.println(prompt + " (empty string to abort) ");
+            out.println(prompt + " (empty string to abort) ");
             try {
                 String input = scanner.next("[0-9]+-[0-9]+-[0-9]+");
                 scanner.nextLine();
@@ -98,7 +101,8 @@ public class InputHelper {
                 }
                 return dateformat.parse(input);
             } catch (ParseException | InputMismatchException e) {
-                System.out.println("Wrong date format.");
+                out.println("Wrong date format.");
+                scanner.nextLine();
             }
         }
     }
