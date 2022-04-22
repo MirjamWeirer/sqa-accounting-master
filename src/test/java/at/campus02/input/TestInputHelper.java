@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -55,7 +56,9 @@ public class TestInputHelper {
     public void testValidDateAfterInvalidDate2() throws EOFException {
         //setup
         Scanner scanner = mock(Scanner.class);
-        when(scanner.next(anyString())).thenReturn("2022-03-01");
+        when(scanner.next(anyString()))
+                .thenThrow(new InputMismatchException())
+                .thenReturn("2022-03-01");
         PrintStream out = mock(PrintStream.class);
         InputHelper inputHelper = new InputHelper(scanner,out);
         //execute
