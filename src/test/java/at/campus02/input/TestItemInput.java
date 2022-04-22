@@ -3,6 +3,7 @@ package at.campus02.input;
 import at.campus02.exchange.ExchangeRates;
 import at.campus02.exchange.ExchangeRatesAPI;
 import at.campus02.storage.Database;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.EOFException;
@@ -55,7 +56,17 @@ public class TestItemInput {
     }
 
     @Test
-    public void removeItem(){
+    public void removeItem() throws EOFException {
+        //setup
+        InputHelper inputMock = mock(InputHelper.class);
+        when(inputMock.getItemId(InputHelper.ID_MUST_EXIST))
+                .thenReturn(1);
 
+        //execution
+        Database.items.remove(1);
+
+        //verify
+        Assert.assertFalse(Database.items.containsKey(1));
+        ;
     }
 }
